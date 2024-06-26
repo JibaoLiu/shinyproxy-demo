@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 RUN install.r shiny intrval
 RUN echo "local(options(shiny.port = 3838, shiny.host = '0.0.0.0'))" > /usr/lib/R/etc/Rprofile.site
-RUN addgroup --system app && adduser --system --ingroup app app
+RUN groupadd -g 3000 app && useradd -c 'app' -u 3000 -g 3000 -m -d /home/app -s /sbin/nologin app
 WORKDIR /home/app
 COPY app .
 RUN chown app:app -R /home/app
